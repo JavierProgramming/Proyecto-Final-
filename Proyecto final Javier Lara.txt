@@ -1,0 +1,182 @@
+1).La persona a asegurar tiene que ser mayor de edad, por lo cual no se
+consideran los casos en los cuales esto no sea verdad.
+
+● Luego de leer y relacionar el problema con el programa, complete los 3
+incisos numerados en los comentarios del programa, el resto del
+programa contiene ejemplos de cómo realizarlo
+
+# 1. Solicitar la fecha de nacimiento del cliente.
+fecha_nacimiento = input("Ingrese la fecha de nacimiento del cliente (YYYY-MM-DD): ")
+
+# 2. Calcular la edad del cliente a partir de la fecha de nacimiento.
+# Aquí se puede utilizar algún módulo o función para calcular la edad a partir de la fecha de nacimiento.
+# Por ejemplo, usando datetime:
+from datetime import datetime
+
+fecha_actual = datetime.now()
+fecha_nacimiento_dt = datetime.strptime(fecha_nacimiento, "%Y-%m-%d")
+edad = fecha_actual.year - fecha_nacimiento_dt.year - ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento_dt.month, fecha_nacimiento_dt.day))
+
+# 3. Verificar si el cliente es mayor de edad.
+if edad >= 18:
+    print("El cliente es mayor de edad y puede ser asegurado.")
+    # Aquí continuaría el proceso de cotización del seguro.
+else:
+    print("Lo sentimos, el cliente no es mayor de edad y no puede ser asegurado.")
+    # Aquí se podría agregar algún mensaje o instrucciones para manejar el caso en el que el cliente no sea mayor de edad.
+
+
+2) Se tiene un plan base, al cual se le pueden aplicar recargos extra
+dependiendo de las condiciones del asegurado. Las condiciones que
+causan recargos son las siguientes:
+a. Dependiendo de la edad del asegurado
+b. Dependiendo de si el asegurado está casado o no y
+dependiendo también de la edad del esposo/a del asegurado
+c. Dependiendo de la cantidad de hijos o hijas que tenga el
+asegurado.
+
+Luego de leer y relacionar el problema con el programa, complete los 3
+incisos numerados en los comentarios del programa, el resto del
+programa contiene ejemplos de cómo realizarlo
+
+def calcular_costo_seguro(edad, estado_civil, edad_conyuge, hijos):
+    """
+    Calcula el costo final del seguro
+
+    Args:
+        edad (int): Edad del asegurado
+        estado_civil (str): Estado civil del asegurado ("Soltero/a", "Casado/a")
+        edad_conyuge (int): Edad del cónyuge del asegurado (solo si está casado/a)
+        hijos (int): Cantidad de hijos/as del asegurado
+
+    Returns:
+        float: Costo final del seguro
+    """
+
+    # Costo base
+    costo_base = 100
+
+    # Recargos por edad
+    if edad < 25:
+        recargo_edad = 0.1
+    elif edad > 45:
+        recargo_edad = 0.15
+    else:
+        recargo_edad = 0
+
+    # Recargos por estado civil y edad del cónyuge
+    if estado_civil == "Casado/a":
+        if edad_conyuge < 30:
+            recargo_conyuge = 0.05
+        elif edad_conyuge > 40:
+            recargo_conyuge = 0.1
+        else:
+            recargo_conyuge = 0
+    else:
+        recargo_conyuge = 0
+
+    # Recargos por cantidad de hijos
+    if hijos == 1:
+        recargo_hijos = 0.02
+    elif hijos == 2:
+        recargo_hijos = 0.04
+    elif hijos >= 3:
+        recargo_hijos = 0.06
+    else:
+        recargo_hijos = 0
+
+    # Costo final
+    costo_final = costo_base * (1 + recargo_edad + recargo_conyuge + recargo_hijos)
+
+    return costo_final
+
+# Ejemplo de uso
+edad = 30
+estado_civil = "Casado/a"
+edad_conyuge = 35
+hijos = 2
+
+costo_seguro = calcular_costo_seguro(edad, estado_civil, edad_conyuge, hijos)
+
+print(f"El costo final del seguro es: ${costo_seguro}")
+
+
+3). 3. Para el primer y el segundo punto, son recargos basados en los rangos de
+edades:
+a. Si tienen de 18 a 24 años, se les hará un recargo del 10% del precio base.
+
+b. Si tienen de 25 a 49 años, se les hará un recargo del 20% del precio
+base.
+c. Si tienen 50 años o más, se les hará un recargo del 30% del precio base
+Este recargo se aplica individualmente para el asegurado y el cónyuge,
+por ejemplo:
+● El precio base es de Q.2,000
+● El asegurado tiene 23 años
+● Su cónyuge tiene 26 años
+● Por el asegurado se realiza un recargo de 10%, es decir Q.200
+● Por el cónyuge se realiza un recargo de 20% es decir Q.400
+● El precio total sería de Q.2,600, el seguro cubriría a ambas
+personas
+
+Luego de leer y relacionar el problema con el programa, complete los 3
+incisos numerados en los comentarios del programa, el resto del
+programa contiene ejemplos de cómo realizarlo
+
+# 1. Leer los datos del asegurado y su cónyuge del archivo adjunto.
+# Código para leer los datos del archivo y almacenarlos en variables, por ejemplo: nombre_asegurado, edad_asegurado, nombre_conyuge, edad_conyuge, etc.
+
+# 2. Calcular la edad del asegurado y la edad del cónyuge.
+# Código para calcular la edad a partir de la fecha de nacimiento, por ejemplo: 
+# edad_asegurado = calcular_edad(fecha_nacimiento_asegurado)
+# edad_conyuge = calcular_edad(fecha_nacimiento_conyuge)
+
+# 3. Verificar la edad del asegurado y aplicar el recargo correspondiente:
+if 18 <= edad_asegurado <= 24:
+    recargo_asegurado = 0.10 * precio_base
+elif 25 <= edad_asegurado <= 49:
+    recargo_asegurado = 0.20 * precio_base
+else:
+    recargo_asegurado = 0.30 * precio_base
+
+# 4. Verificar la edad del cónyuge y aplicar el recargo correspondiente:
+if 18 <= edad_conyuge <= 24:
+    recargo_conyuge = 0.10 * precio_base
+elif 25 <= edad_conyuge <= 49:
+    recargo_conyuge = 0.20 * precio_base
+else:
+    recargo_conyuge = 0.30 * precio_base
+
+# 5. Sumar los recargos correspondientes al precio base para obtener el precio total de la cotización del seguro.
+precio_total = precio_base + recargo_asegurado + recargo_conyuge
+
+# 6. Mostrar el precio total de la cotización del seguro.
+print("El precio total de la cotización del seguro es:", precio_total)
+
+4. Para el tercer punto, el recargo por cada hijo será de un 20% sobre el precio
+base, independientemente de la edad de los mismos.
+
+
+● Luego de leer y relacionar el problema con el programa, complete los 3
+incisos numerados en los comentarios del programa, el resto del
+programa contiene ejemplos de cómo realizarlo
+
+
+# 1. Leer los datos del asegurado del archivo adjunto.
+# Código para leer los datos del archivo y almacenarlos en variables, por ejemplo: nombre_asegurado, edad_asegurado, cantidad_hijos, etc.
+
+# 2. Contar la cantidad de hijos del asegurado.
+# Código para contar la cantidad de hijos, por ejemplo:
+# cantidad_hijos = obtener_cantidad_hijos()
+
+# 3. Calcular el recargo por cada hijo:
+recargo_por_hijo = 0.20 * precio_base * cantidad_hijos
+
+# 4. Sumar el recargo por cada hijo al precio base para obtener el precio total de la cotización del seguro.
+precio_total = precio_base + recargo_por_hijo
+
+# 5. Mostrar el precio total de la cotización del seguro.
+print("El precio total de la cotización del seguro es:", precio_total)
+
+
+
+
